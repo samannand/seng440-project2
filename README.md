@@ -3,7 +3,7 @@
 
 Repository for SENG440: Mobile computing's second Android development assignment.
 
-Available on University GitLab server and my personal GitHub
+Available on University GitLab server and also my personal GitHub
 
 
 ## Repository Structure
