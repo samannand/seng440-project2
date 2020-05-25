@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Crapchat</string>
+    <string name="title_chats">Chats</string>
+    <string name="title_camera">Camera</string>
+    <string name="title_map">Map</string>
+
+    <!-- Chats Fragment -->
+    <string name="chats_fragment">Chats Fragment</string>
+
+    <!-- Camera Fragment -->
+    <string name="camera_fragment">Camera Fragment</string>
+
+    <!-- Map Fragment -->
+    <string name="map_fragment">Map Fragment</string>
+</resources>
