@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import sga111.seng440.crapchat.R
 
@@ -19,8 +20,7 @@ class CameraFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        cameraViewModel =
-                ViewModelProviders.of(this).get(CameraViewModel::class.java)
+        cameraViewModel = ViewModelProvider(this).get(CameraViewModel::class.java)
         val view = inflater.inflate(R.layout.fragment_camera, container, false)
         return view
     }

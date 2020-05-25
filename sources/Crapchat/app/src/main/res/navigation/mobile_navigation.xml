@@ -3,22 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_camera">
 
     <fragment
-        android:id="@+id/navigation_home"
+        android:id="@+id/navigation_chats"
         android:name="sga111.seng440.crapchat.ui.chats.ChatsFragment"
         android:label="@string/title_chats"
         tools:layout="@layout/fragment_chats" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_camera"
         android:name="sga111.seng440.crapchat.ui.camera.CameraFragment"
         android:label="@string/title_camera"
         tools:layout="@layout/fragment_camera" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_map"
         android:name="sga111.seng440.crapchat.ui.map.MapFragment"
         android:label="@string/title_map"
         tools:layout="@layout/fragment_map" />
