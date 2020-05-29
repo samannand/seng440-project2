@@ -9,6 +9,7 @@
 
     <!-- Camera Fragment -->
     <string name="camera_fragment">Camera Fragment</string>
+    <string name="camera_button_content_description">A white vector image of a camera icon to be used as the button to take a photo or \'snap\'</string>
 
     <!-- Map Fragment -->
     <string name="map_fragment">Map Fragment</string>

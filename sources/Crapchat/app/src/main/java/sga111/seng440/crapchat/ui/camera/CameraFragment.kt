@@ -6,20 +6,22 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Environment
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.Camera
-import androidx.camera.core.ImageAnalysis
-import androidx.camera.core.ImageCapture
-import androidx.camera.core.Preview
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.camera.core.*
+import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import kotlinx.android.synthetic.main.fragment_camera.*
 import sga111.seng440.crapchat.R
 import java.io.File
+import java.lang.Exception
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -33,7 +35,7 @@ class CameraFragment : Fragment() {
 
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
-    private lateinit var cameraCaptureButton: Button
+    private lateinit var cameraCaptureButton: AppCompatImageButton
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -78,7 +80,27 @@ class CameraFragment : Fragment() {
     }
 
     private fun startCamera() {
-        // TODO
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(context!!)
+
+        cameraProviderFuture.addListener(Runnable {
+            // Used to bind the lifecycle of cameras to the lifecycle owner
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+
+            preview = Preview.Builder().build()
+
+            val cameraSelector = CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
+
+            try {
+                cameraProvider.unbindAll()
+
+                camera = cameraProvider.bindToLifecycle(
+                    this, cameraSelector, preview)
+                preview?.setSurfaceProvider(viewFinder.createSurfaceProvider(camera?.cameraInfo))
+            } catch (exc: Exception) {
+                Log.e(TAG, "Use case binding failed", exc)
+            }
+        }, ContextCompat.getMainExecutor(context!!))
+
     }
 
     private fun takePhoto() {
