@@ -8,6 +8,21 @@
     tools:context=".MainActivity">
 
     <ImageButton
+        android:id="@+id/camera_flip_button"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="120dp"
+        android:backgroundTint="#0000"
+        android:contentDescription="@string/camera_flip_button_content_description"
+        android:elevation="1dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/camera_capture_button"
+        app:srcCompat="@drawable/ic_cached_black_24dp" />
+
+    <ImageButton
         android:id="@+id/camera_capture_button"
         android:layout_width="100dp"
         android:layout_height="100dp"

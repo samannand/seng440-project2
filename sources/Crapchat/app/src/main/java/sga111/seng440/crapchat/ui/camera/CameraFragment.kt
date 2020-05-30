@@ -32,10 +32,12 @@ class CameraFragment : Fragment() {
     private var imageCapture: ImageCapture? = null
     private var imageAnalyzer: ImageAnalysis? = null
     private var camera: Camera? = null
+    private var lensFacing = CameraSelector.LENS_FACING_BACK
 
     private lateinit var outputDirectory: File
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var cameraCaptureButton: AppCompatImageButton
+    private lateinit var cameraFlipButton: AppCompatImageButton
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -58,6 +60,10 @@ class CameraFragment : Fragment() {
         cameraCaptureButton = view.findViewById(R.id.camera_capture_button)
         cameraCaptureButton.setOnClickListener { takePhoto() }
 
+        // Setup the listener for the flip camera button
+        cameraFlipButton = view.findViewById(R.id.camera_flip_button)
+        cameraFlipButton.setOnClickListener { flipCamera() }
+
         outputDirectory = getOutputDirectory()!!
 
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -79,6 +85,15 @@ class CameraFragment : Fragment() {
         }
     }
 
+    private fun flipCamera() {
+        lensFacing = if (CameraSelector.LENS_FACING_BACK == lensFacing) {
+            CameraSelector.LENS_FACING_FRONT
+        } else {
+            CameraSelector.LENS_FACING_BACK
+        }
+        startCamera()
+    }
+
     private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(context!!)
 
@@ -88,7 +103,7 @@ class CameraFragment : Fragment() {
 
             preview = Preview.Builder().build()
 
-            val cameraSelector = CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK).build()
+            val cameraSelector = CameraSelector.Builder().requireLensFacing(lensFacing).build()
 
             try {
                 cameraProvider.unbindAll()
