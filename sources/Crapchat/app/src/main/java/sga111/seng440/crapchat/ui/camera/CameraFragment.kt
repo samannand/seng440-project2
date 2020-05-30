@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -23,6 +24,8 @@ import kotlinx.android.synthetic.main.fragment_camera.*
 import sga111.seng440.crapchat.R
 import java.io.File
 import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -65,7 +68,7 @@ class CameraFragment : Fragment() {
         cameraFlipButton = view.findViewById(R.id.camera_flip_button)
         cameraFlipButton.setOnClickListener { flipCamera() }
 
-        outputDirectory = getOutputDirectory()!!
+        outputDirectory = getOutputDirectory()
 
         cameraExecutor = Executors.newSingleThreadExecutor()
 
@@ -109,13 +112,17 @@ class CameraFragment : Fragment() {
 
             preview = Preview.Builder().build()
 
+            imageCapture = ImageCapture.Builder()
+                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                .build()
+
             val cameraSelector = CameraSelector.Builder().requireLensFacing(lensFacing).build()
 
             try {
                 cameraProvider.unbindAll()
 
                 camera = cameraProvider.bindToLifecycle(
-                    this, cameraSelector, preview)
+                    this, cameraSelector, preview, imageCapture)
                 preview?.setSurfaceProvider(viewFinder.createSurfaceProvider(camera?.cameraInfo))
             } catch (exc: Exception) {
                 Log.e(TAG, "Use case binding failed", exc)
@@ -129,7 +136,37 @@ class CameraFragment : Fragment() {
         val takePhotoAnimation = AnimationUtils.loadAnimation(context!!, R.anim.take_picture_animation);
         cameraCaptureButton.startAnimation(takePhotoAnimation)
 
-        // TODO
+        // Take photo
+
+        Log.d(TAG, "Before image capture return")
+
+        val imageCapture = imageCapture ?: return
+
+        val photoFile = File(
+            outputDirectory,
+            SimpleDateFormat(FILENAME_FORMAT, Locale.ENGLISH)
+                .format(System.currentTimeMillis()) + ".jpg"
+        )
+
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        Log.d(TAG, "Before taking picture")
+
+        imageCapture.takePicture(
+            outputOptions, ContextCompat.getMainExecutor(context), object : ImageCapture.OnImageSavedCallback {
+                override fun onError(exception: ImageCaptureException) {
+                    Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show()
+                    Log.e(TAG, "Photo capture failed: ${exception.message}", exception)
+                }
+
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val savedUri = Uri.fromFile(photoFile)
+                    val msg = "Photo capture succeeded: $savedUri"
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    Log.d(TAG, msg)
+                }
+            }
+        )
     }
 
     private fun allPermissionsGranted() = REQUIRED_PERMISSIONS.all {
@@ -140,15 +177,15 @@ class CameraFragment : Fragment() {
 
 
 
-//    fun getOutputDirectory(): File? {
+//    fun getOutputDirectory(): File {
 //        val mediaDir = Environment.getExternalStorageDirectory()?.let {
 //            File(it, resources.getString(R.string.app_name)).apply { mkdirs() } }
 //        return if (mediaDir != null && mediaDir.exists())
-//            mediaDir else null // this used to say filesDir
+//            mediaDir else filesDir // this used to say filesDir
 //    }
 
-    fun getOutputDirectory(): File {
-        return File(Environment.getExternalStorageDirectory(), resources.getString(R.string.app_name)).apply { mkdirs() }
+    private fun getOutputDirectory(): File {
+        return File(context!!.getExternalFilesDir(null), resources.getString(R.string.app_name)).apply { mkdirs() }
     }
 
     companion object {
