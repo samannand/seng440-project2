@@ -87,8 +87,11 @@ class CameraFragment : Fragment() {
     }
 
     private fun flipCamera() {
-        val mShakeAnimation = AnimationUtils.loadAnimation(context!!, R.anim.camera_flip_animation);
-        cameraFlipButton.startAnimation(mShakeAnimation)
+
+        // Spin the flip camera icon
+        val cameraFlipAnimation = AnimationUtils.loadAnimation(context!!, R.anim.camera_flip_animation);
+        cameraFlipButton.startAnimation(cameraFlipAnimation)
+
         lensFacing = if (CameraSelector.LENS_FACING_BACK == lensFacing) {
             CameraSelector.LENS_FACING_FRONT
         } else {
@@ -122,6 +125,10 @@ class CameraFragment : Fragment() {
     }
 
     private fun takePhoto() {
+        // Animate the photo capture button
+        val takePhotoAnimation = AnimationUtils.loadAnimation(context!!, R.anim.take_picture_animation);
+        cameraCaptureButton.startAnimation(takePhotoAnimation)
+
         // TODO
     }
 
