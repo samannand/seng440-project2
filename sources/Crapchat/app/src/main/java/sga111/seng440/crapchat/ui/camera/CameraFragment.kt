@@ -184,7 +184,7 @@ class CameraFragment : Fragment() {
         return File(context!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES), resources.getString(R.string.app_name))}
 
     companion object {
-        private const val TAG = "CameraXBasic"
+        private const val TAG = "Crapchat"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
