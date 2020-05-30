@@ -165,8 +165,9 @@ class CameraFragment : Fragment() {
                     val msg = "Photo capture succeeded: $savedUri"
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
-
                     val previewIntent = Intent(context!!, SnapPreviewActivity::class.java)
+                    previewIntent.putExtra("imageUri", savedUri.toString())
+                    previewIntent.putExtra("name", photoFile.name)
                     startActivity(previewIntent)
                 }
             }
@@ -179,23 +180,13 @@ class CameraFragment : Fragment() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-
-
-//    fun getOutputDirectory(): File {
-//        val mediaDir = Environment.getExternalStorageDirectory()?.let {
-//            File(it, resources.getString(R.string.app_name)).apply { mkdirs() } }
-//        return if (mediaDir != null && mediaDir.exists())
-//            mediaDir else filesDir // this used to say filesDir
-//    }
-
     private fun getOutputDirectory(): File {
-        return File(context!!.getExternalFilesDir(null), resources.getString(R.string.app_name)).apply { mkdirs() }
-    }
+        return File(context!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES), resources.getString(R.string.app_name))}
 
     companion object {
         private const val TAG = "CameraXBasic"
         private const val FILENAME_FORMAT = "yyyy-MM-dd-HH-mm-ss-SSS"
         private const val REQUEST_CODE_PERMISSIONS = 10
-        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
+        private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
     }
 }
