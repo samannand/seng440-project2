@@ -3,6 +3,7 @@ package sga111.seng440.crapchat.ui.camera
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -164,6 +165,9 @@ class CameraFragment : Fragment() {
                     val msg = "Photo capture succeeded: $savedUri"
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                     Log.d(TAG, msg)
+
+                    val previewIntent = Intent(context!!, SnapPreviewActivity::class.java)
+                    startActivity(previewIntent)
                 }
             }
         )
