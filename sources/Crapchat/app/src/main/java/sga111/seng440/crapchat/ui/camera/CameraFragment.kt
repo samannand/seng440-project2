@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.util.Log
 import android.view.*
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -86,6 +87,8 @@ class CameraFragment : Fragment() {
     }
 
     private fun flipCamera() {
+        val mShakeAnimation = AnimationUtils.loadAnimation(context!!, R.anim.camera_flip_animation);
+        cameraFlipButton.startAnimation(mShakeAnimation)
         lensFacing = if (CameraSelector.LENS_FACING_BACK == lensFacing) {
             CameraSelector.LENS_FACING_FRONT
         } else {
