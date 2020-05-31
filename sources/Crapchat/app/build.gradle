@@ -69,4 +69,8 @@ dependencies {
     implementation 'com.google.maps.android:android-maps-utils:0.5+'
     implementation 'com.google.code.gson:gson:2.8.5'
 
+    // Prefs
+
+    implementation 'androidx.preference:preference:1.1.0+'
+
 }

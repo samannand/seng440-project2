@@ -1,15 +1,16 @@
 package sga111.seng440.crapchat
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import sga111.seng440.crapchat.ui.settings.PreferencesActivity
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,6 +46,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showPreferencesScreen() {
-        Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show()
+        //Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show()
+
+        val intent = Intent(this, PreferencesActivity::class.java)
+        startActivity(intent)
+
     }
 }

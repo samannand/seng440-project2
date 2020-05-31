@@ -19,4 +19,7 @@
 
     <!-- Map Fragment -->
     <string name="map_fragment">Map Fragment</string>
+
+    <!-- Preferences -->
+    <string name="notifications_title">Enable notifications</string>
 </resources>
