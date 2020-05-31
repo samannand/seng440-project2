@@ -18,6 +18,12 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.settings.PreferencesActivity"></activity>
 
+        <receiver
+            android:name=".AlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
+        </receiver>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />

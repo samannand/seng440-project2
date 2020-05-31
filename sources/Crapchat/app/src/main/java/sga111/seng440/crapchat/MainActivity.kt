@@ -1,7 +1,12 @@
 package sga111.seng440.crapchat
 
+import android.app.*
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.os.SystemClock
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -10,9 +15,13 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
 import sga111.seng440.crapchat.ui.settings.PreferencesActivity
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val alarmReceiver = AlarmReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +35,15 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_chats, R.id.navigation_camera, R.id.navigation_map))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        // TODO: Room updates
+        // TODO: Also set up notification when the preference is actually changed in the settings screen
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val notificationsEnabled = sharedPreferences.getBoolean("notifications", false)
+        if (notificationsEnabled) {
+            createNotificationChannel()
+            scheduleNotification()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -51,5 +69,44 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, PreferencesActivity::class.java)
         startActivity(intent)
 
+    }
+
+    private fun createNotificationChannel() {
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(Notification.CATEGORY_REMINDER, "Reminder to Snap!", importance).apply {
+            description = "Send daily reminders to check out on friends using Crapchat"
+        }
+        val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
+
+    private fun scheduleNotification() {
+        var intent = Intent(applicationContext, AlarmReceiver::class.java).let {
+            PendingIntent.getBroadcast(applicationContext, 0, it, PendingIntent.FLAG_NO_CREATE)
+        }
+
+        if (intent == null) {
+
+            intent = Intent(applicationContext, AlarmReceiver::class.java).let {
+                PendingIntent.getBroadcast(applicationContext, 0, it, 0)
+            }
+
+            val today = Calendar.getInstance().apply {
+                timeInMillis = System.currentTimeMillis()
+                set(Calendar.HOUR_OF_DAY, NOTIFICATION_HOUR)
+                set(Calendar.MINUTE, NOTIFICATION_MINUTE)
+            }
+
+            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            //alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 30000, intent)
+            alarmManager.setInexactRepeating(AlarmManager.RTC, today.timeInMillis, AlarmManager.INTERVAL_DAY, intent)
+        } else {
+            Log.d("Crapchat", "Notification already scheduled")
+        }
+    }
+
+    companion object {
+        const val NOTIFICATION_HOUR = 9
+        const val NOTIFICATION_MINUTE = 0
     }
 }
