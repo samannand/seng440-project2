@@ -4,6 +4,7 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
@@ -36,13 +37,15 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        createNotificationChannel()
+
         // TODO: Room updates
-        // TODO: Also set up notification when the preference is actually changed in the settings screen
+
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
         val notificationsEnabled = sharedPreferences.getBoolean("notifications", false)
-        if (notificationsEnabled) {
-            createNotificationChannel()
-            scheduleNotification()
+        val setNotification = sharedPreferences.getBoolean("notificationSet", false)
+        if (notificationsEnabled && !setNotification) {
+            Util.scheduleNotification(applicationContext)
         }
     }
 
@@ -80,33 +83,8 @@ class MainActivity : AppCompatActivity() {
         notificationManager.createNotificationChannel(channel)
     }
 
-    private fun scheduleNotification() {
-        var intent = Intent(applicationContext, AlarmReceiver::class.java).let {
-            PendingIntent.getBroadcast(applicationContext, 0, it, PendingIntent.FLAG_NO_CREATE)
-        }
-
-        if (intent == null) {
-
-            intent = Intent(applicationContext, AlarmReceiver::class.java).let {
-                PendingIntent.getBroadcast(applicationContext, 0, it, 0)
-            }
-
-            val today = Calendar.getInstance().apply {
-                timeInMillis = System.currentTimeMillis()
-                set(Calendar.HOUR_OF_DAY, NOTIFICATION_HOUR)
-                set(Calendar.MINUTE, NOTIFICATION_MINUTE)
-            }
-
-            val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-            //alarmManager.set(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime() + 30000, intent)
-            alarmManager.setInexactRepeating(AlarmManager.RTC, today.timeInMillis, AlarmManager.INTERVAL_DAY, intent)
-        } else {
-            Log.d("Crapchat", "Notification already scheduled")
-        }
-    }
-
     companion object {
-        const val NOTIFICATION_HOUR = 9
+        const val NOTIFICATION_HOUR = 0
         const val NOTIFICATION_MINUTE = 0
     }
 }
