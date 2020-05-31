@@ -1,6 +1,9 @@
 package sga111.seng440.crapchat
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toast
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -22,5 +25,26 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_chats, R.id.navigation_camera, R.id.navigation_map))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.action_bar_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.settings_button -> {
+                showPreferencesScreen()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
+    private fun showPreferencesScreen() {
+        Toast.makeText(this, "Coming soon!", Toast.LENGTH_SHORT).show()
     }
 }
