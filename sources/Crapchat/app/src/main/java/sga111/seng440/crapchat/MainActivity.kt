@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val NOTIFICATION_HOUR = 9
+        const val NOTIFICATION_HOUR = 0
         const val NOTIFICATION_MINUTE = 0
     }
 }
