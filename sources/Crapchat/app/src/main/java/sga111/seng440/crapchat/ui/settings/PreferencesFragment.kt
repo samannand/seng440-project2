@@ -18,7 +18,6 @@ class PreferencesFragment : PreferenceFragmentCompat() {
         val preferenceManager = preferenceManager
         val dataStore = CustomPreferenceDataStore(context!!, lifecycleScope)
         preferenceManager.preferenceDataStore = dataStore
-
         setPreferencesFromResource(R.xml.preferences_screen, rootKey)
 
         val notificationsPreference: SwitchPreferenceCompat? = findPreference("notifications")
@@ -36,13 +35,6 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
             true
         }
-
-
-        val preferencesDao = CrapchatRoomDatabase.getDatabase(context!!, lifecycleScope).preferenceDao()
-        val repository = PreferenceRepository(preferencesDao)
-        var pref = repository.retrieve("notifications")
-        var result = dataStore.getBoolean("notifications", false)
-        Log.d("QWERTYUIOP", "Value of pref is ${result}")
     }
 
 }

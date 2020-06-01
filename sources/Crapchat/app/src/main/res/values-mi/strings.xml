@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Crapchat</string>
+    <string name="title_chats">kōrerorero</string>
+    <string name="title_camera">pū whakaahua</string>
+    <string name="title_map">mahere</string>
+    <string name="chats_fragment">whakaahua</string>
+    <string name="camera_fragment">whakaahua tūāporo</string>
+    <string name="camera_flip_button_content_description">He whakaahua vector ma o te tohu kāmera hei whakamahi ma te pihi hei tango whakaahua, \'hiia ranei\'</string>
+    <string name="snap_preview_content_description">He tirohanga mo te mahanga i tangohia</string>
+    <string name="send_button_content_description">Paatene kaihoko tuku putea</string>
+    <string name="map_fragment">mahere tūāporo</string>
+    <string name="notifications_title">taea whakamōhiotanga</string>
+    <string name="daily_reminder_text">Just he whakamaharatanga aroha ki te tirotiro i o hoa ki te whakamahi i te Crapchat i enei waa kaore i te maarama.</string>
+    <string name="daily_reminder_title">kia mau tonu te Crapchat!</string>
+    <string name="camera_button_content_description">He whakaahua vector ma o te tohu kāmera hei whakamahi ma te pihi hei tango whakaahua, \'hiia ranei\'</string>
+    <string name="delete_button_content_description">Mukua te whakaahua vector paatene</string>
+</resources>

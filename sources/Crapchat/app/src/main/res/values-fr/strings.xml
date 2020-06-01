@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Crapchat</string>
+    <string name="title_chats">chats</string>
+    <string name="title_camera">caméra</string>
+    <string name="title_map">carte</string>
+    <string name="chats_fragment">fragment de chats</string>
+    <string name="camera_fragment">fragment de caméra</string>
+    <string name="camera_flip_button_content_description">Une image vectorielle blanche d\'une icône de synchronisation à utiliser comme bouton pour basculer entre les vues de caméra avant et arrière</string>
+    <string name="snap_preview_content_description">Un aperçu du cliché qui vient d\'être pris</string>
+    <string name="send_button_content_description">Bouton d\'envoi d\'actif vectoriel</string>
+    <string name="map_fragment">fragment de carte</string>
+    <string name="notifications_title">Activer les notifications</string>
+    <string name="daily_reminder_title">Continuez le Crapchat!</string>
+    <string name="daily_reminder_text">Juste un rappel amical pour vérifier vos amis utilisant Crapchat en ces temps incertains!</string>
+    <string name="camera_button_content_description">Une image vectorielle blanche d\'une icône d\'appareil photo à utiliser comme bouton pour prendre une photo ou `` snap \'\'</string>
+    <string name="delete_button_content_description">"Supprimer l'image vectorielle du bouton "</string>
+</resources>

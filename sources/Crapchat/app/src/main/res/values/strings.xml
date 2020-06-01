@@ -9,13 +9,13 @@
 
     <!-- Camera Fragment -->
     <string name="camera_fragment">Camera Fragment</string>
-    <string name="camera_button_content_description">A white vector image of a camera icon to be used as the button to take a photo or \'snap\'</string>
     <string name="camera_flip_button_content_description">A white vector image of a sync icon to be used as the button to switch between front and rear facing camera views</string>
+    <string name="camera_button_content_description">A white vector image of a camera icon to be used as the button to take a photo or \'snap\'</string>
 
     <!-- Snap preview -->
     <string name="snap_preview_content_description">A preview of the just taken snap</string>
-    <string name="save_button_content_description">Vector asset save button</string>
     <string name="send_button_content_description">Vector asset send button</string>
+    <string name="delete_button_content_description">Delete button vector image</string>
 
     <!-- Map Fragment -->
     <string name="map_fragment">Map Fragment</string>
