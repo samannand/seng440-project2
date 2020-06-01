@@ -2,13 +2,23 @@ package sga111.seng440.crapchat.ui.settings
 
 import android.os.Bundle
 import android.util.Log
+import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreferenceCompat
 import sga111.seng440.crapchat.R
 import sga111.seng440.crapchat.Util
+import sga111.seng440.crapchat.room.CrapchatRoomDatabase
+import sga111.seng440.crapchat.room.PreferenceRepository
 
 class PreferencesFragment : PreferenceFragmentCompat() {
+
+
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+
+        val preferenceManager = preferenceManager
+        val dataStore = CustomPreferenceDataStore(context!!, lifecycleScope)
+        preferenceManager.preferenceDataStore = dataStore
+
         setPreferencesFromResource(R.xml.preferences_screen, rootKey)
 
         val notificationsPreference: SwitchPreferenceCompat? = findPreference("notifications")
@@ -26,6 +36,13 @@ class PreferencesFragment : PreferenceFragmentCompat() {
 
             true
         }
+
+
+        val preferencesDao = CrapchatRoomDatabase.getDatabase(context!!, lifecycleScope).preferenceDao()
+        val repository = PreferenceRepository(preferencesDao)
+        var pref = repository.retrieve("notifications")
+        var result = dataStore.getBoolean("notifications", false)
+        Log.d("QWERTYUIOP", "Value of pref is ${result}")
     }
 
 }

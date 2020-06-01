@@ -12,11 +12,15 @@ import android.view.Menu
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.preference.PreferenceManager
+import sga111.seng440.crapchat.room.CrapchatRoomDatabase
+import sga111.seng440.crapchat.room.PreferenceRepository
+import sga111.seng440.crapchat.ui.settings.CustomPreferenceDataStore
 import sga111.seng440.crapchat.ui.settings.PreferencesActivity
 import java.util.*
 
@@ -39,10 +43,10 @@ class MainActivity : AppCompatActivity() {
 
         createNotificationChannel()
 
-        // TODO: Room updates
-
+        val dataStore: CustomPreferenceDataStore = CustomPreferenceDataStore(applicationContext, lifecycleScope)
+        val notificationsEnabled = dataStore.getBoolean("notifications", false)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val notificationsEnabled = sharedPreferences.getBoolean("notifications", false)
+
         val setNotification = sharedPreferences.getBoolean("notificationSet", false)
         if (notificationsEnabled && !setNotification) {
             Util.scheduleNotification(applicationContext)
@@ -84,7 +88,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val NOTIFICATION_HOUR = 0
+        const val NOTIFICATION_HOUR = 9
         const val NOTIFICATION_MINUTE = 0
     }
 }
