@@ -2,6 +2,7 @@ package sga111.seng440.crapchat.ui.camera
 
 import android.Manifest
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -11,7 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import sga111.seng440.crapchat.R
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 
@@ -37,8 +40,18 @@ class SnapPreviewActivity : AppCompatActivity() {
         }
 
         sendButton.setOnClickListener {
-            Toast.makeText(this, "Feature coming soon!", Toast.LENGTH_SHORT).show()
-            finish()
+//            Toast.makeText(this, "Feature coming soon!", Toast.LENGTH_SHORT).show()
+//            finish()
+
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.setType("image/jpeg")
+
+            val file = File(Uri.parse(previewUri).getPath())
+            val imageUri = FileProvider.getUriForFile(this, "sga111.seng440.crapchat.provider", file)
+
+            shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri) // Could be problem with other applications not having access to this URI
+            startActivityForResult(Intent.createChooser(shareIntent, "Share Image"), 33)
+
         }
 
         deleteButton.setOnClickListener {
@@ -81,6 +94,14 @@ class SnapPreviewActivity : AppCompatActivity() {
             if (!allPermissionsGranted()) {
                 Toast.makeText(this, "Permissions not granted by the user.", Toast.LENGTH_SHORT).show()
             }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == 33) {
+            finish()
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
         }
     }
 
