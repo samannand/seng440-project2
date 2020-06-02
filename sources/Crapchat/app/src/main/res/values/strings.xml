@@ -26,4 +26,10 @@
     <!-- Notifications -->
     <string name="daily_reminder_title">Keep up the Crapchat!</string>
     <string name="daily_reminder_text">Just a friendly reminder to check up on your friends using Crapchat in these uncertain times!</string>
+
+    <!-- Shortcuts -->
+    <string name="settings_shortcut_short_label">Settings</string>
+    <string name="settings_shortcut_long_label">Settings</string>
+    <string name="settings_shortcut_disabled">Disabled</string>
+
 </resources>

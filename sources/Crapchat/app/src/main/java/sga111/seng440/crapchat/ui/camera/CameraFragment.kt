@@ -56,8 +56,8 @@ class CameraFragment : Fragment() {
         if (allPermissionsGranted()) {
             startCamera()
         } else {
-            ActivityCompat.requestPermissions(
-                activity as Activity, REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
+            requestPermissions(
+                REQUIRED_PERMISSIONS, REQUEST_CODE_PERMISSIONS
             )
         }
 
