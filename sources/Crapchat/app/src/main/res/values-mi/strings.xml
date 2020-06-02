@@ -15,4 +15,7 @@
     <string name="daily_reminder_title">kia mau tonu te Crapchat!</string>
     <string name="camera_button_content_description">He whakaahua vector ma o te tohu kāmera hei whakamahi ma te pihi hei tango whakaahua, \'hiia ranei\'</string>
     <string name="delete_button_content_description">Mukua te whakaahua vector paatene</string>
+    <string name="settings_shortcut_disabled">ngoikore te</string>
+    <string name="settings_shortcut_short_label">tautuhinga</string>
+    <string name="settings_shortcut_long_label">tautuhinga</string>
 </resources>

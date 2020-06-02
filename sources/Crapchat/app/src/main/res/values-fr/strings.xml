@@ -15,4 +15,7 @@
     <string name="daily_reminder_text">Juste un rappel amical pour vérifier vos amis utilisant Crapchat en ces temps incertains!</string>
     <string name="camera_button_content_description">Une image vectorielle blanche d\'une icône d\'appareil photo à utiliser comme bouton pour prendre une photo ou `` snap \'\'</string>
     <string name="delete_button_content_description">"Supprimer l'image vectorielle du bouton "</string>
+    <string name="settings_shortcut_short_label">réglages</string>
+    <string name="settings_shortcut_long_label">réglages</string>
+    <string name="settings_shortcut_disabled">désactivé</string>
 </resources>
