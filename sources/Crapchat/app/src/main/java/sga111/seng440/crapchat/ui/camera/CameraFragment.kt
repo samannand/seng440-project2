@@ -148,6 +148,7 @@ class CameraFragment : Fragment() {
             SimpleDateFormat(FILENAME_FORMAT, Locale.ENGLISH)
                 .format(System.currentTimeMillis()) + ".jpg"
         )
+        photoFile.parentFile.mkdirs() // App stopped working for absolutely no reason until I added this line
 
         val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
 
@@ -181,7 +182,9 @@ class CameraFragment : Fragment() {
     }
 
     private fun getOutputDirectory(): File {
-        return File(context!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES), resources.getString(R.string.app_name))}
+        val file = File(context!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES), resources.getString(R.string.app_name))
+        return file
+    }
 
     companion object {
         private const val TAG = "Crapchat"
